@@ -10,23 +10,31 @@ import {
 const regexMap: { [key: string]: RegExp } = {
     AccessBank: accessBankRegex,
     FidelityBank: fidelityBankRegex,
-    GTBank: gtBankRegex,
+    GTB: gtBankRegex,
     UBA: ubaBankRegex,
 };
 
 const formatDate = (date: string) => {
     console.log(date, 'here')
+    let d_date
     if (date.includes('AM')){
         date = date.replace('AM', '')
+        d_date = new Date(date)
+        let formattedHour = parseInt(d_date.getHours());
+        d_date.setHours(formattedHour+1)
     }
     else if (date.includes('PM')){
         date = date.replace('PM', '')
+        d_date = new Date(date)
+        let formattedHour = parseInt(d_date.getHours());
+        formattedHour == 12 ? '' : formattedHour += 12;
+        d_date.setHours(formattedHour+1)
     }
     else{
-        var d_date = new Date(date)
-    return d_date.toISOString().replace('T', ' ').replace(/\.(\S+)/g, '')
+        d_date = new Date(date)
+        d_date.setHours(d_date.getHours()+1)
     }
-    
+    return d_date.toISOString().replace('T', ' ').replace(/\.(\S+)/g, '')
 }
 
 const parseSMS = (regex: string, message: string) => {
@@ -37,7 +45,7 @@ const parseSMS = (regex: string, message: string) => {
     // if (!match) {
     //     throw new Error("Message format not recognized.");
     // }
-
+   
     if (!match?.groups) {
         throw new Error("Message format not recognized.");
     }
@@ -65,13 +73,14 @@ export const parse_message: RequestHandler = async (req: Request, res: Response)
 
     const regex: any = regexMap[sender_id];
     if (!regex) {
-        return res.status(400).json({ error: 'Unsupported sender ID' });
+        return res.status(400).json({ error: 'Unsupported sender ID, supported sender Ids are AccessBank, FidelityBank, GTB and UBA' });
     }
 
     try {
         const parsedData = parseSMS(regex, new_message);
         parsedData.institution = sender_id.length > 4 ? sender_id.replace(/([A-Z])/g, ' $1').trim() : sender_id
-        // console.log(parsedData.transaction_time)
+        parsedData.debit_credit == 'dr' ? parsedData.debit_credit = 'debit' : ''
+        parsedData.debit_credit == 'cr' ? parsedData.debit_credit = 'credit' : ''
         parsedData.transaction_time = formatDate(parsedData.transaction_time)
         res.json(parsedData);
     } catch (error: any) {
