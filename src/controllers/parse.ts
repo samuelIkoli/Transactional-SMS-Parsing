@@ -15,7 +15,6 @@ const regexMap: { [key: string]: RegExp } = {
 };
 
 const formatDate = (date: string) => {
-    console.log(date, 'here')
     let d_date
     if (date.includes('AM')){
         date = date.replace('AM', '')
@@ -66,7 +65,6 @@ const stripCommas = (value: string): string => value.replace(/,/g, '');
 
 
 export const parse_message: RequestHandler = async (req: Request, res: Response) => {
-    console.log('eba')
     const { parser, message, sender_id } = req.body;
 
     const new_message = stripCommas(message)
