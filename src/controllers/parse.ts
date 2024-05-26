@@ -14,6 +14,9 @@ const regexMap: { [key: string]: RegExp } = {
     UBA: ubaBankRegex,
 };
 
+const debitFlags = ['dr', 'debit']
+const creditFlags = ['cr', 'credit']
+
 const formatDate = (date: string) => {
     let d_date
     if (date.includes('AM')){
@@ -71,10 +74,11 @@ export const parse_message: RequestHandler = async (req: Request, res: Response)
     try {
         const parsedData = parseSMS(regex, new_message);
         parsedData.institution = sender_id.length > 4 ? sender_id.replace(/([A-Z])/g, ' $1').trim() : sender_id
-        parsedData.debit_credit == 'dr' ? parsedData.debit_credit = 'debit' : ''
-        parsedData.debit_credit == 'cr' ? parsedData.debit_credit = 'credit' : ''
+        console.log(parsedData.debit_credit, 'hay')
+        debitFlags.includes(parsedData.debit_credit)  ? parsedData.debit_credit = 'debit' : ''
+        creditFlags.includes(parsedData.debit_credit) ? parsedData.debit_credit = 'credit' : ''
         parsedData.transaction_time = formatDate(parsedData.transaction_time)
-        res.json(parsedData);
+        res.status(200).json(parsedData);
     } catch (error: any) {
         res.status(400).json({ error: error.message });
     }

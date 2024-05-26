@@ -51,7 +51,7 @@ var init_parsers = __esm({
 });
 
 // src/controllers/parse.ts
-var regexMap, formatDate, parseSMS, stripCommas, parse_message;
+var regexMap, debitFlags, creditFlags, formatDate, parseSMS, stripCommas, parse_message;
 var init_parse = __esm({
   "src/controllers/parse.ts"() {
     "use strict";
@@ -62,6 +62,8 @@ var init_parse = __esm({
       GTB: gtBankRegex,
       UBA: ubaBankRegex
     };
+    debitFlags = ["dr", "debit"];
+    creditFlags = ["cr", "credit"];
     formatDate = (date) => {
       let d_date;
       if (date.includes("AM")) {
@@ -107,10 +109,11 @@ var init_parse = __esm({
       try {
         const parsedData = parseSMS(regex, new_message);
         parsedData.institution = sender_id.length > 4 ? sender_id.replace(/([A-Z])/g, " $1").trim() : sender_id;
-        parsedData.debit_credit == "dr" ? parsedData.debit_credit = "debit" : "";
-        parsedData.debit_credit == "cr" ? parsedData.debit_credit = "credit" : "";
+        console.log(parsedData.debit_credit, "hay");
+        debitFlags.includes(parsedData.debit_credit) ? parsedData.debit_credit = "debit" : "";
+        creditFlags.includes(parsedData.debit_credit) ? parsedData.debit_credit = "credit" : "";
         parsedData.transaction_time = formatDate(parsedData.transaction_time);
-        res.json(parsedData);
+        res.status(200).json(parsedData);
       } catch (error) {
         res.status(400).json({ error: error.message });
       }
