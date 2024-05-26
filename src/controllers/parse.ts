@@ -19,13 +19,13 @@ const formatDate = (date: string) => {
     if (date.includes('AM')){
         date = date.replace('AM', '')
         d_date = new Date(date)
-        let formattedHour = parseInt(d_date.getHours());
+        let formattedHour: number = d_date.getHours();
         d_date.setHours(formattedHour+1)
     }
     else if (date.includes('PM')){
         date = date.replace('PM', '')
         d_date = new Date(date)
-        let formattedHour = parseInt(d_date.getHours());
+        let formattedHour: number = d_date.getHours();
         formattedHour == 12 ? '' : formattedHour += 12;
         d_date.setHours(formattedHour+1)
     }
