@@ -82,10 +82,7 @@ var init_parse = __esm({
       return d_date.toISOString().replace("T", " ").replace(/\.(\S+)/g, "");
     };
     parseSMS = (regex, message) => {
-      const match = message.match(new RegExp(regex));
-      if (!regex) {
-        regex = "^[0-9]";
-      }
+      const match = message.match(regex);
       if (!match?.groups) {
         throw new Error("Message format not recognized.");
       }
@@ -149,11 +146,11 @@ var globRequire_routes = __glob({
 
 // src/index.ts
 var app = (0, import_express.default)();
-var port = 3e3;
+var port = process.env.PORT || 3e3;
 app.use(import_express.default.json());
 app.use(import_express.default.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
-  res.send("Hello, world!");
+  res.send("Hello, world! I am an SMS parser and I was born on 24-05-2024 and deployed on 26-04-2024");
 });
 app.get("/try", (req, res) => {
   res.send("Hello, world! The thing go skkkkrrrr pa!!!!");

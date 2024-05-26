@@ -36,15 +36,9 @@ const formatDate = (date: string) => {
     return d_date.toISOString().replace('T', ' ').replace(/\.(\S+)/g, '')
 }
 
-const parseSMS = (regex: string, message: string) => {
-    const match = message.match(new RegExp(regex));
-    if (!regex){
-        regex = "^[0-9]"
-    }
-    // if (!match) {
-    //     throw new Error("Message format not recognized.");
-    // }
-   
+const parseSMS = (regex: RegExp, message: string) => {
+    const match = message.match(regex);
+
     if (!match?.groups) {
         throw new Error("Message format not recognized.");
     }
