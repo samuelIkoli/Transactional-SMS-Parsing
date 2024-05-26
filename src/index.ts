@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello, world!');
+    res.send('Hello, world! I am an SMS parser and I was born on 24-05-2024 and deployed on 26-04-2024');
 });
 
 app.get('/try', (req: Request, res: Response) => {
