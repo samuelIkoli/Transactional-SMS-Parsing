@@ -46,8 +46,7 @@ const parseSMS = (regex: RegExp, message: string) => {
         throw new Error("Message format not recognized.");
     }
 
-    // Assuming the match groups correspond to the relevant data in order
-    return {
+    let res = {
         institution: match.groups?.institution || "",
         amount: parseFloat(match.groups?.amount || "0"),
         balance: parseFloat(match.groups?.balance || "0"),
@@ -56,6 +55,8 @@ const parseSMS = (regex: RegExp, message: string) => {
         transaction_time: match.groups?.transaction_time || "",
         debit_credit: match.groups?.debit_credit?.toLowerCase() || "unknown",
     };
+
+    return res;
 };
 
 const stripCommas = (value: string): string => value.replace(/,/g, '');
