@@ -56,6 +56,11 @@ const parseSMS = (regex: RegExp, message: string) => {
         debit_credit: match.groups?.debit_credit?.toLowerCase() || "unknown",
     };
 
+    debitFlags.includes(res.debit_credit)  ? res.debit_credit = 'debit' : ''
+    creditFlags.includes(res.debit_credit) ? res.debit_credit = 'credit' : ''
+
+    res.transaction_time = formatDate(res.transaction_time)
+
     return res;
 };
 
@@ -74,11 +79,7 @@ export const parse_message: RequestHandler = async (req: Request, res: Response)
 
     try {
         const parsedData = parseSMS(regex, new_message);
-        parsedData.institution = sender_id.length > 4 ? sender_id.replace(/([A-Z])/g, ' $1').trim() : sender_id
-        console.log(parsedData.debit_credit, 'hay')
-        debitFlags.includes(parsedData.debit_credit)  ? parsedData.debit_credit = 'debit' : ''
-        creditFlags.includes(parsedData.debit_credit) ? parsedData.debit_credit = 'credit' : ''
-        parsedData.transaction_time = formatDate(parsedData.transaction_time)
+        parsedData.institution = sender_id.length > 4 ? sender_id.replace(/([A-Z])/g, ' $1').trim() : sender_id        
         res.status(200).json(parsedData);
     } catch (error: any) {
         res.status(400).json({ error: error.message });
