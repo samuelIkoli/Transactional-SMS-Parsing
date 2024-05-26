@@ -4,7 +4,7 @@
   "description": "Parser for bank alerts",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "start": "npm install && npm run build && node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js --format=esm",
     "test": "echo \"Error: no test specified\" && exit 1"
