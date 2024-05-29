@@ -34,19 +34,19 @@ export const parseSMS = (regex: RegExp, message: string) => {
     }
 
     let res = {
-        institution: match.groups?.institution || "",
+        institution: match.groups?.institution || "Could not get",
         amount: parseFloat(match.groups?.amount || "0"),
         balance: parseFloat(match.groups?.balance || "0"),
         currency: match.groups?.currency || "Naira",
-        narration: match.groups?.narration || "",
-        transaction_time: match.groups?.transaction_time || "",
+        narration: match.groups?.narration || "N/A",
+        transactionTime: match.groups?.transactionTime || "Could not get",
         debitCredit: match.groups?.debitCredit?.toLowerCase() || "unknown",
     };
 
     debitFlags.includes(res.debitCredit)  ? res.debitCredit = 'debit' : ''
     creditFlags.includes(res.debitCredit) ? res.debitCredit = 'credit' : ''
 
-    res.transaction_time = formatDate(res.transaction_time)
+    res.transactionTime = formatDate(res.transactionTime)
 
     return res;
 };

@@ -1,7 +1,7 @@
-const accessBankRegex = /(?<debitCredit>Debit|Credit)\nAmt:NGN(?<amount>[\d,]+\.\d{2})\nAcc:(?<account>[\d\*]+)\nDesc:(?<narration>[^\n]+)\nTime:(?<transaction_time>[\d\/: ]+)\nAvail Bal:NGN(?<balance>[\d,]+\.\d{2})/i;
-const fidelityBankRegex = /Acct:\*\*(?<account>\d{4})\n(?<debitCredit>DR|CR):N(?<amount>[\d,]+(?:\.\d+)?)[\s\S]*?Desc:(?<narration>[\s\S]+?)(?:\n|\s+)DT:(?<transaction_time>\d{2}\/[A-Z]{3}\/\d{2} [\d:AMP]+)[\s\S]*?Bal:N(?<balance>[\d,]+(?:\.\d+)?)/i;
-const ubaBankRegex = /Txn: (?<debitCredit>Debit|Credit)\nAc:(?<account>[^\n]+)\nAmt:NGN (?<amount>[\d,]+(?:\.\d{2})?)\nDes:(?<narration>[^\n]+)\nDate:(?<transaction_time>\d{2}-[A-Za-z]{3}-\d{4} [\d:]+)\nBal:NGN (?<balance>[\d,]+(?:\.\d{2})?)/i;
-const gtBankRegex = /Acct: \*\*\*\*\*\*(?<account>\d{4})\nAmt: NGN(?<amount>[\d,]+(?:\.\d+)?)[\s\S]+?(?<debitCredit>CR|DR)[\s\S]*?Desc: (?<narration>[^\n]+)\nAvail Bal: NGN(?<balance>[\d,]+(?:\.\d+)?)[\s\S]*?Date: (?<transaction_time>\d{2}-[A-Za-z]{3}-\d{4} [\d:]+)/i;
+const accessBankRegex = /(?<debitCredit>Debit|Credit)\nAmt:NGN(?<amount>[\d,]+\.\d{2})\nAcc:(?<account>[\d\*]+)\nDesc:(?<narration>[^\n]+)\nTime:(?<transactionTime>[\d\/: ]+)\nAvail Bal:NGN(?<balance>[\d,]+\.\d{2})/i;
+const fidelityBankRegex = /Acct:\*\*(?<account>\d{4})\n(?<debitCredit>DR|CR):N(?<amount>[\d,]+(?:\.\d+)?)[\s\S]*?Desc:(?<narration>[\s\S]+?)(?:\n|\s+)DT:(?<transactionTime>\d{2}\/[A-Z]{3}\/\d{2} [\d:AMP]+)[\s\S]*?Bal:N(?<balance>[\d,]+(?:\.\d+)?)/i;
+const ubaBankRegex = /Txn: (?<debitCredit>Debit|Credit)\nAc:(?<account>[^\n]+)\nAmt:NGN (?<amount>[\d,]+(?:\.\d{2})?)\nDes:(?<narration>[^\n]+)\nDate:(?<transactionTime>\d{2}-[A-Za-z]{3}-\d{4} [\d:]+)\nBal:NGN (?<balance>[\d,]+(?:\.\d{2})?)/i;
+const gtBankRegex = /Acct: \*\*\*\*\*\*(?<account>\d{4})\nAmt: NGN(?<amount>[\d,]+(?:\.\d+)?)[\s\S]+?(?<debitCredit>CR|DR)[\s\S]*?Desc: (?<narration>[^\n]+)\nAvail Bal: NGN(?<balance>[\d,]+(?:\.\d+)?)[\s\S]*?Date: (?<transactionTime>\d{2}-[A-Za-z]{3}-\d{4} [\d:]+)/i;
 
 export {
     accessBankRegex,
