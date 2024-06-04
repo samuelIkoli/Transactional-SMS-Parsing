@@ -55,6 +55,8 @@ export const parseMessage: RequestHandler = async (
         : senderID;
     res.status(200).json(parsedData);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    res
+      .status(500)
+      .json({ error: "Something went wrong, Please contact support" });
   }
 };
