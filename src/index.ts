@@ -12,8 +12,6 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     return res.status(500).json({
       status: "error",
       message: "Bad request",
-      session_id: "",
-      data: null,
     });
   }
   next(err);
