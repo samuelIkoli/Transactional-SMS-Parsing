@@ -22,6 +22,14 @@ export const parseMessage: RequestHandler = async (
   req: Request,
   res: Response
 ) => {
+  if (!req.body) {
+    return res.status(400).json({
+      status: "error",
+      message: "Bad request",
+      session_id: "",
+      data: null,
+    });
+  }
   const { parser, message, senderID } = req.body;
   if (!message || typeof message !== "string") {
     return res.status(400).json({
