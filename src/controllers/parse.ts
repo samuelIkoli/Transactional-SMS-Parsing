@@ -53,13 +53,11 @@ export const parseMessage: RequestHandler = async (
       senderID.length > 4
         ? senderID.replace(/([A-Z])/g, " $1").trim()
         : senderID;
-    res.status(200).json(parsedData);
+    return res.status(200).json(parsedData);
   } catch (error: any) {
-    res
-      .status(500)
-      .json({
-        error:
-          "The message format currently isn't supported. (Unfamiliar message format",
-      });
+    return res.status(500).json({
+      error:
+        "The message format currently isn't supported. (Unfamiliar message format)",
+    });
   }
 };
