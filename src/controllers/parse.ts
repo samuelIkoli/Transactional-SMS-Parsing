@@ -57,6 +57,9 @@ export const parseMessage: RequestHandler = async (
   } catch (error: any) {
     res
       .status(500)
-      .json({ error: "Something went wrong, Please contact support" });
+      .json({
+        error:
+          "The message format currently isn't supported. (Unfamiliar message format",
+      });
   }
 };
